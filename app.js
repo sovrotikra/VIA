@@ -311,6 +311,38 @@
     showScreen("intro");
   });
 
+  // --- רקע ניצוצות (tsParticles) במסך הפתיחה ---
+  function initParticles() {
+    if (typeof tsParticles === "undefined") return; // נטען מ-CDN; אם לא זמין, פשוט אין רקע
+    tsParticles.load({
+      id: "particles-bg",
+      options: {
+        fullScreen: { enable: false },
+        background: { color: { value: "transparent" } },
+        fpsLimit: 60,
+        interactivity: {
+          events: { onHover: { enable: true, mode: "repulse" }, resize: true },
+          modes: { repulse: { distance: 80, duration: 0.4 } },
+        },
+        particles: {
+          number: { value: 90, density: { enable: true, width: 800, height: 800 } },
+          color: { value: ["#C9A24B", "#e3c87f", "#ffffff"] },
+          shape: { type: "circle" },
+          opacity: {
+            value: { min: 0.1, max: 0.85 },
+            animation: { enable: true, speed: 3, sync: false },
+          },
+          size: { value: { min: 0.6, max: 2.2 } },
+          move: {
+            enable: true, speed: 0.5, direction: "none",
+            random: true, straight: false, outModes: { default: "out" },
+          },
+        },
+        detectRetina: true,
+      },
+    });
+  }
+
   // --- אתחול ---
   if (typeof emailjs !== "undefined" && EMAILJS_CONFIG.publicKey !== "REPLACE_ME") {
     emailjs.init({ publicKey: EMAILJS_CONFIG.publicKey });
@@ -318,4 +350,5 @@
   wireSocialLinks();
   renderQuestions();
   updateProgress();
+  initParticles();
 })();

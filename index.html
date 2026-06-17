@@ -22,17 +22,20 @@
 
     <!-- מסך פתיחה -->
     <section id="screen-intro" class="screen">
-      <img src="assets/plane.png" alt="" class="intro-plane" aria-hidden="true" />
-      <h1 class="intro-title">שאלון החוזקות שלך</h1>
-      <p class="intro-sub">לכל אחת מאיתנו יש צירוף חוזקות אופי משלה. כאן תגלי את <strong>חמש החוזקות המובילות</strong> שלך.
-        אלו שמרגישות לך הכי טבעיות, ושמהן את שואבת אנרגיה.</p>
-      <ul class="intro-points">
-        <li>48 משפטים קצרים</li>
-        <li>5–7 דקות מילוי</li>
-        <li>תוצאות מיידיות + אפשרות שמירה כ-PDF</li>
-      </ul>
-      <p class="intro-note">זה לא מבחן ואין תשובות נכונות. קראי כל משפט וסמני מהבטן, לפי מה שעולה לך ראשון. ככה התוצאה יוצאת הכי מדויקת, והכי <em>את</em>. 💛</p>
-      <button id="btn-start" class="btn btn-primary">בואי נתחיל&nbsp;✈️</button>
+      <div id="particles-bg" aria-hidden="true"></div>
+      <div class="intro-content">
+        <img src="assets/plane.png" alt="" class="intro-plane" aria-hidden="true" />
+        <h1 class="intro-title">שאלון החוזקות שלך</h1>
+        <p class="intro-sub">לכל אחת מאיתנו יש צירוף חוזקות אופי משלה. כאן תגלי את <strong>חמש החוזקות המובילות</strong> שלך.
+          אלו שמרגישות לך הכי טבעיות, ושמהן את שואבת אנרגיה.</p>
+        <ul class="intro-points">
+          <li>48 משפטים קצרים</li>
+          <li>5–7 דקות מילוי</li>
+          <li>תוצאות מיידיות + אפשרות שמירה כ-PDF</li>
+        </ul>
+        <p class="intro-note">זה לא מבחן ואין תשובות נכונות. קראי כל משפט וסמני מהבטן, לפי מה שעולה לך ראשון. ככה התוצאה יוצאת הכי מדויקת, והכי <em>את</em>. 💛</p>
+        <button id="btn-start" class="btn btn-primary">בואי נתחיל&nbsp;✈️</button>
+      </div>
     </section>
 
     <!-- מסך השאלון -->
@@ -105,6 +108,7 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tsparticles/slim@3/tsparticles.slim.bundle.min.js"></script>
   <script src="data.js"></script>
   <script src="app.js"></script>
 </body>

@@ -325,16 +325,17 @@
           modes: { repulse: { distance: 80, duration: 0.4 } },
         },
         particles: {
-          number: { value: 90, density: { enable: true, width: 800, height: 800 } },
+          number: { value: 120, density: { enable: true, width: 600, height: 600 } },
           color: { value: ["#C9A24B", "#e3c87f", "#ffffff"] },
           shape: { type: "circle" },
           opacity: {
-            value: { min: 0.1, max: 0.85 },
-            animation: { enable: true, speed: 3, sync: false },
+            value: { min: 0.3, max: 1 },
+            animation: { enable: true, speed: 1.2, sync: false },
           },
-          size: { value: { min: 0.6, max: 2.2 } },
+          size: { value: { min: 1.5, max: 4 } },
+          shadow: { enable: true, color: "#e3c87f", blur: 6 },
           move: {
-            enable: true, speed: 0.5, direction: "none",
+            enable: true, speed: 0.7, direction: "none",
             random: true, straight: false, outModes: { default: "out" },
           },
         },

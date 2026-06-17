@@ -10,3 +10,8 @@ Thumbs.db
 *.pptx
 
 .vercel
+
+# קבצי עבודה של page-edit-mode (מקומי בלבד)
+*.orig.html
+*.editor-config.json
+*-edited.html

@@ -311,37 +311,68 @@
     showScreen("intro");
   });
 
-  // --- רקע ניצוצות (tsParticles) במסך הפתיחה ---
+  // --- רקע ניצוצות במסך הפתיחה (canvas עצמאי, בלי תלות חיצונית) ---
   function initParticles() {
-    if (typeof tsParticles === "undefined") return; // נטען מ-CDN; אם לא זמין, פשוט אין רקע
-    tsParticles.load({
-      id: "particles-bg",
-      options: {
-        fullScreen: { enable: false },
-        background: { color: { value: "transparent" } },
-        fpsLimit: 60,
-        interactivity: {
-          events: { onHover: { enable: true, mode: "repulse" }, resize: true },
-          modes: { repulse: { distance: 80, duration: 0.4 } },
-        },
-        particles: {
-          number: { value: 120, density: { enable: true, width: 600, height: 600 } },
-          color: { value: ["#C9A24B", "#e3c87f", "#ffffff"] },
-          shape: { type: "circle" },
-          opacity: {
-            value: { min: 0.3, max: 1 },
-            animation: { enable: true, speed: 1.2, sync: false },
-          },
-          size: { value: { min: 1.5, max: 4 } },
-          shadow: { enable: true, color: "#e3c87f", blur: 6 },
-          move: {
-            enable: true, speed: 0.7, direction: "none",
-            random: true, straight: false, outModes: { default: "out" },
-          },
-        },
-        detectRetina: true,
-      },
-    });
+    const host = document.getElementById("particles-bg");
+    if (!host) return;
+    const canvas = document.createElement("canvas");
+    canvas.style.cssText = "width:100%;height:100%;display:block";
+    host.appendChild(canvas);
+    const ctx = canvas.getContext("2d");
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const colors = ["#C9A24B", "#e3c87f", "#ffffff"];
+    let stars = [], W = 0, H = 0;
+
+    function makeStar() {
+      return {
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: 0.9 + Math.random() * 2.4,
+        c: colors[(Math.random() * colors.length) | 0],
+        phase: Math.random() * Math.PI * 2,
+        tw: 0.008 + Math.random() * 0.025,           // קצב הבהוב
+        dx: (Math.random() - 0.5) * 0.25,
+        dy: (Math.random() - 0.5) * 0.25,
+      };
+    }
+    function resize() {
+      const rect = host.getBoundingClientRect();
+      W = rect.width; H = rect.height;
+      if (W === 0 || H === 0) return;
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const count = Math.max(45, Math.round((W * H) / 8000));
+      stars = [];
+      for (let i = 0; i < count; i++) stars.push(makeStar());
+    }
+    function frame() {
+      if (W && H) {
+        ctx.clearRect(0, 0, W, H);
+        for (let i = 0; i < stars.length; i++) {
+          const s = stars[i];
+          s.phase += s.tw;
+          const alpha = 0.25 + Math.abs(Math.sin(s.phase)) * 0.75;
+          s.x += s.dx; s.y += s.dy;
+          if (s.x < 0) s.x = W; else if (s.x > W) s.x = 0;
+          if (s.y < 0) s.y = H; else if (s.y > H) s.y = 0;
+          ctx.globalAlpha = alpha;
+          ctx.fillStyle = s.c;
+          ctx.shadowColor = s.c;
+          ctx.shadowBlur = 8;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+        ctx.shadowBlur = 0;
+      }
+      requestAnimationFrame(frame);
+    }
+    resize();
+    window.addEventListener("resize", resize);
+    // ביטחון: חישוב מחדש אחרי שהפריסה התייצבה
+    setTimeout(resize, 300);
+    requestAnimationFrame(frame);
   }
 
   // --- אתחול ---
